@@ -16,23 +16,32 @@ public class AndroidSigningConfig {
         this.name = name
     }
 
-    def getName() {
+    String getName() {
         return this.name
     }
 
-    def storePath(storePath) {
+    void storePath(String storePath) {
         this.storePath = storePath
     }
 
-    def storePassword(storePassword) {
+    void storePassword(String storePassword) {
         this.storePassword = storePassword
     }
 
-    def keyAlias(keyAlias) {
+    void keyAlias(String keyAlias) {
         this.keyAlias = keyAlias
     }
 
-    def keyPassword(keyPassword) {
+    void keyPassword(String keyPassword) {
         this.keyPassword = keyPassword
+    }
+
+    Map asMap() {
+        return [
+            StorePath: storePath,
+            StorePassword: storePassword,
+            KeyAlias: keyAlias,
+            KeyPassword: keyPassword
+        ]
     }
 }

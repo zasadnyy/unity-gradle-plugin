@@ -6,7 +6,7 @@ namespace Com.Zasadnyy
 {
 	public static class BuildUtils
 	{
-		public static Dictionary<string, string> ConvertToDictionary(string[] args)
+		public static Dictionary<string, string> CommandLineArgsToDictionary(string[] args)
 		{
 			var parameters = new Dictionary<string, string>();
 

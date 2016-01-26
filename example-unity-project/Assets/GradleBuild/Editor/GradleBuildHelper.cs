@@ -2,16 +2,31 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using LitJson;
 
 namespace Com.Zasadnyy
 {
-	public class GradleBuildHelper
+	public static class GradleBuildHelper
 	{
 		public static void BuildInBatchMode()
 		{
-			var config = BuildConfig.Parse(Environment.GetCommandLineArgs());
+			var config = ParseBuildConfig();
 			ApplyConfig(config);
 			PerformBuild(config);
+		}
+
+		static BuildConfig ParseBuildConfig()
+		{
+			var parameters = BuildUtils.CommandLineArgsToDictionary(Environment.GetCommandLineArgs());
+			var serializedBuildConfig = parameters["-BuildConfig"];
+
+			JsonMapper.RegisterImporter<string, BuildTarget>(
+				obj => (BuildTarget)Enum.Parse(typeof(BuildTarget), obj)
+			);
+			var config = JsonMapper.ToObject<BuildConfig> (serializedBuildConfig);
+			JsonMapper.UnregisterImporters();
+
+			return config;
 		}
 
 		private static void ApplyConfig(BuildConfig config)
@@ -33,13 +48,13 @@ namespace Com.Zasadnyy
 
 		private static void ApplyAdroidConfig(BuildConfig config)
 		{
-			PlayerSettings.Android.keystoreName = config.Android.Signing.StorePath;
-			PlayerSettings.Android.keystorePass = config.Android.Signing.StorePassword;
-			PlayerSettings.Android.keyaliasName = config.Android.Signing.KeyAlias;
-			PlayerSettings.Android.keyaliasPass = config.Android.Signing.KeyPassword;
+			PlayerSettings.Android.keystoreName = config.Android.SigningConfig.StorePath;
+			PlayerSettings.Android.keystorePass = config.Android.SigningConfig.StorePassword;
+			PlayerSettings.Android.keyaliasName = config.Android.SigningConfig.KeyAlias;
+			PlayerSettings.Android.keyaliasPass = config.Android.SigningConfig.KeyPassword;
 
 			PlayerSettings.Android.bundleVersionCode = config.Android.BundleVersionCode;
-			PlayerSettings.Android.useAPKExpansionFiles = config.Android.EnableSplitApplicationBinary;
+			PlayerSettings.Android.useAPKExpansionFiles = config.Android.SplitApplicationBinary;
 
 			// TODO make configurable
 			EditorUserBuildSettings.androidBuildSubtarget = AndroidBuildSubtarget.ETC;

@@ -1,9 +1,9 @@
 package com.zasadnyy.unitygradleplugin
 
+import groovy.json.JsonOutput
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.process.ExecResult
-import groovy.json.JsonOutput
 
 class UnityPlugin implements Plugin<Project> {
 
@@ -38,18 +38,23 @@ class UnityPlugin implements Plugin<Project> {
             def plugin = project.unity
             def buildConfig = plugin.getMergedBuildConfig(targetPlatform)
 
-            def serializedBuildConfig = JsonOutput.toJson(buildConfig)
+            def configMap = buildConfig.asMap()
+
+            // add property
+            configMap.TargetPlatform = targetPlatform.unityBuildTarget
+
+            def serializedBuildConfig = JsonOutput.toJson(configMap)
 
             commandLine "${plugin.unityPath}/Unity",
                     '-batchmode',
                     '-projectPath', "${project.rootDir.absolutePath}/${plugin.projectPath}",
                     '-logFile', buildConfig.logFile,
                     '-executeMethod', GRADLE_BUILD_HELPER_CSHARP_ENTRY_METHOD,
-                    "-TargetPlatform=${targetPlatform.unityBuildTarget}",
                     "-BuildConfig=$serializedBuildConfig",
                     '-quit'
 
             println "   Building Unity ${targetPlatform} player with configuration:\n${buildConfig}"
         }
     }
+
 }

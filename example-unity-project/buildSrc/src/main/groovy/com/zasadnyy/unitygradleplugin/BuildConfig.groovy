@@ -2,7 +2,7 @@ package com.zasadnyy.unitygradleplugin
 
 import org.gradle.api.Project
 
-class BuildConfig {
+class BuildConfig implements Serializable {
 
     String outputPath
     String outputName
@@ -51,8 +51,21 @@ class BuildConfig {
         this.scenes = scenes
     }
 
+    Map asMap() {
+        return  [
+            OutputPath: outputPath,
+            OutputName: outputName,
+            LogFile: logFile,
+            BundleId: bundleId,
+            BundleVersion: bundleVersion,
+            IsDevelopmentBuild: isDevelopmentBuild,
+            EnableScriptDebugging: enableScriptDebugging,
+            Scenes: scenes
+        ]
+    }
+
     @Override
-    public String toString() {
+    String toString() {
         def sb = new StringBuilder()
         this.properties
                 .findAll { it.key != 'class' }

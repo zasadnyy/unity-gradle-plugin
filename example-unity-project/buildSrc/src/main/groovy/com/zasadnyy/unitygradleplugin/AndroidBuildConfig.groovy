@@ -35,4 +35,15 @@ class AndroidBuildConfig extends BuildConfig {
     void bundleVersionCode(int bundleVersionCode) {
         this.bundleVersionCode = bundleVersionCode
     }
+
+    @Override
+    Map asMap() {
+        def map = super.asMap()
+        map.Android = [
+                SplitApplicationBinary: splitApplicationBinary,
+                BundleVersionCode: bundleVersionCode,
+                SigningConfig: signingConfig.asMap()
+        ]
+        return map
+    }
 }
