@@ -1,3 +1,7 @@
+import com.zasadnyy.unitygradleplugin.IosScriptingBackend
+import com.zasadnyy.unitygradleplugin.IosSdkVersion
+import com.zasadnyy.unitygradleplugin.IosVersion
+
 apply plugin: com.zasadnyy.unitygradleplugin.UnityPlugin
 
 unity {
@@ -35,6 +39,11 @@ unity {
 
     ios {
         logFile 'build-ios.log'
+        shortBundleVersion 'vXXX'
+        scriptingBackend IosScriptingBackend.Mono
+        sdkVersion IosSdkVersion.SimulatorSDK
+        targetIosVersion IosVersion.iOS_4_0
+        outputName "ios-v${shortBundleVersion}"
     }
 }
 

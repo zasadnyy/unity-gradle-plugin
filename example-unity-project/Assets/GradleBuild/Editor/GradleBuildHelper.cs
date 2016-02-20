@@ -23,6 +23,12 @@ namespace Com.Zasadnyy
 			JsonMapper.RegisterImporter<string, BuildTarget>(
 				obj => (BuildTarget)Enum.Parse(typeof(BuildTarget), obj)
 			);
+			JsonMapper.RegisterImporter<string, iOSSdkVersion>(
+				obj => (iOSSdkVersion)Enum.Parse(typeof(iOSSdkVersion), obj)
+			);
+			JsonMapper.RegisterImporter<string, iOSTargetOSVersion>(
+				obj => (iOSTargetOSVersion)Enum.Parse(typeof(iOSTargetOSVersion), obj)
+			);
 			var config = JsonMapper.ToObject<BuildConfig> (serializedBuildConfig);
 			JsonMapper.UnregisterImporters();
 
@@ -32,8 +38,15 @@ namespace Com.Zasadnyy
 		private static void ApplyConfig(BuildConfig config)
 		{
 			ApplyCommonConfig(config);
-			ApplyAdroidConfig(config);
-			ApplyIosConfig(config);
+
+			switch(config.TargetPlatform) {
+			case BuildTarget.Android:
+				ApplyAdroidConfig(config);
+				break;
+			case BuildTarget.iPhone:
+				ApplyIosConfig(config);
+				break;
+			}
 		}
 
 		private static void ApplyCommonConfig(BuildConfig config)
@@ -62,6 +75,10 @@ namespace Com.Zasadnyy
 
 		private static void ApplyIosConfig(BuildConfig config)
 		{
+			PlayerSettings.iOS.sdkVersion = config.Ios.SdkVersion;
+			PlayerSettings.iOS.targetOSVersion = config.Ios.TargetIosVersion;
+
+			// TODO add missing properties
 		}
 
 		private static void PerformBuild(BuildConfig config)
@@ -99,7 +116,7 @@ namespace Com.Zasadnyy
 				catch(IOException)
 				{
 					Debug.LogError(
-						"GradleBuildHelper: deleting old dist folder failed. Please check if this folder is not used by other programs.");
+						"GradleBuildHelper: deleting old dist folder failed. Please check if this folder is not used by other applications.");
 				}
 			}
 			Directory.CreateDirectory(path);

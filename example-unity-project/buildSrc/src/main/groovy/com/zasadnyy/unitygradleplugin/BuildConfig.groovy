@@ -2,7 +2,7 @@ package com.zasadnyy.unitygradleplugin
 
 import org.gradle.api.Project
 
-class BuildConfig implements Serializable {
+class BuildConfig {
 
     String outputPath
     String outputName

@@ -40,7 +40,7 @@ class UnityPlugin implements Plugin<Project> {
 
             def configMap = buildConfig.asMap()
 
-            // add property
+            // adding new property TargetPlatform
             configMap.TargetPlatform = targetPlatform.unityBuildTarget
 
             def serializedBuildConfig = JsonOutput.toJson(configMap)

@@ -5,7 +5,7 @@ package com.zasadnyy.unitygradleplugin
  * by Unity Gradle Build plugin
  */
 enum Platform {
-    Android('Android'), IOS('iPhone')
+    Android('Android'), Ios('iPhone')
 
     /**
      * For some platforms Unity has weird

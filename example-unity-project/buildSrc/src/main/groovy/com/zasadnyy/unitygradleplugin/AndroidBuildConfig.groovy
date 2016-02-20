@@ -17,7 +17,6 @@ class AndroidBuildConfig extends BuildConfig {
     AndroidBuildConfig(Project project) {
         super(project)
         this.signingConfigs = project.container(AndroidSigningConfig)
-        this.splitApplicationBinary = false
     }
 
     void signingConfigs(Closure closure) {

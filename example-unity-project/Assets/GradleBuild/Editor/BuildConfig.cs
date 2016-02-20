@@ -17,6 +17,14 @@ namespace Com.Zasadnyy
 		public SigningConfig SigningConfig { get; set; }
 	}
 
+	public class Ios
+	{
+//		public string ShortBundleVersion { get; set; } TODO: find coresponding property
+//		public  scriptingBackend
+		public iOSSdkVersion SdkVersion { get; set; }
+		public iOSTargetOSVersion TargetIosVersion { get; set; }
+	}
+
 	public class BuildConfig
 	{
 		public BuildTarget TargetPlatform { get; set; }
@@ -31,5 +39,7 @@ namespace Com.Zasadnyy
 		public string[] Scenes { get; set; }
 
 		public Android Android { get; set; }
+
+		public Ios Ios { get; set; }
 	}
 }

@@ -8,7 +8,7 @@ class UnityPluginExtension {
     String projectPath
     BuildConfig common
     AndroidBuildConfig android
-    BuildConfig ios
+    IosBuildConfig ios
 
     private def buildConfigPlatformMapping
     private Project project
@@ -17,7 +17,7 @@ class UnityPluginExtension {
     UnityPluginExtension(Project project) {
         this.project = project
         setDefaults(project)
-        this.buildConfigPlatformMapping = [Android:android, IOS:ios]
+        this.buildConfigPlatformMapping = [Android:android, Ios:ios]
     }
 
     def unityPath(unityPath) {
@@ -72,8 +72,17 @@ class UnityPluginExtension {
         android = project.configure(new AndroidBuildConfig(project)) {
             outputPath 'dist/android/'
             outputName 'android'
+            splitApplicationBinary false
+            bundleVersionCode 1
         }
-        ios = new BuildConfig(project)
+        ios = project.configure(new IosBuildConfig(project)) {
+            outputPath 'dist/ios/'
+            outputName 'ios'
+            shortBundleVersion 'v1.0.0'
+            scriptingBackend IosScriptingBackend.IL2CPP
+            sdkVersion IosSdkVersion.DeviceSDK
+            targetIosVersion IosVersion.iOS_8_1
+        }
     }
 
     private def applyClosure(Object target, Closure closure) {
