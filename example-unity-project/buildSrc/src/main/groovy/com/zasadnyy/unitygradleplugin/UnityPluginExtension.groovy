@@ -4,7 +4,6 @@ import org.gradle.api.Project
 
 class UnityPluginExtension {
     
-    String unityPath
     String projectPath
     BuildConfig common
     AndroidBuildConfig android
@@ -20,10 +19,6 @@ class UnityPluginExtension {
         this.buildConfigPlatformMapping = [Android:android, Ios:ios]
     }
 
-    def unityPath(unityPath) {
-        this.unityPath = unityPath
-    }
-    
     def projectPath(projectPath) {
         this.projectPath = projectPath
     }
@@ -58,7 +53,6 @@ class UnityPluginExtension {
     }
 
     private void setDefaults(Project project) {
-        unityPath = '/Applications/Unity/Unity.app/Contents/MacOS'
         projectPath = ''
         common = project.configure(new BuildConfig(project)) {
             outputPath 'dist/'

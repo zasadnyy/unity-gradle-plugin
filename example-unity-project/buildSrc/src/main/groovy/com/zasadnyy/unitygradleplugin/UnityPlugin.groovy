@@ -45,7 +45,7 @@ class UnityPlugin implements Plugin<Project> {
 
             def serializedBuildConfig = JsonOutput.toJson(configMap)
 
-            commandLine "${plugin.unityPath}/Unity",
+            commandLine "${getUnityPath(project)}/Unity",
                     '-batchmode',
                     '-projectPath', "${project.rootDir.absolutePath}/${plugin.projectPath}",
                     '-logFile', buildConfig.logFile,
@@ -57,4 +57,22 @@ class UnityPlugin implements Plugin<Project> {
         }
     }
 
+    private static String getUnityPath(Project project) {
+        def localEnvProps = new File("${project.rootDir}/local.properties")
+        
+        def props = new Properties()
+        props.load(new FileInputStream(localEnvProps))
+
+        def unityPath = props.getProperty('unity.path')
+        
+        if(!unityPath) {
+            throw new UnityGradleException(
+                    'unity.path property is miss configured. ' +
+                    'Ensure local.properties file is created ' +
+                    'and unity.path property is set to Unity executable location.'
+            )
+        }
+        
+        return unityPath
+    }
 }

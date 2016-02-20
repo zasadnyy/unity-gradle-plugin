@@ -5,8 +5,6 @@ import com.zasadnyy.unitygradleplugin.IosVersion
 apply plugin: com.zasadnyy.unitygradleplugin.UnityPlugin
 
 unity {
-    unityPath '/Applications/Unity_4.7.0f1/Unity.app/Contents/MacOS'
-
     common {
         bundleId 'im.getsocial.testapp'
         bundleVersion 'v.4.0.1'
@@ -57,12 +55,6 @@ unity {
 //        println "Creating ${outputDirPath} folder..."
 //    }
 //}
-//
-//File localEnvProps = new File("${rootDir}/local.properties")
-//Properties props = new Properties()
-//props.load(new FileInputStream(localEnvProps))
-//
-//def unityPath = props.getProperty('unity.executable.dir')
 
 /*
  * ================= Testing tasks =================
