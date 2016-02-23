@@ -1,5 +1,29 @@
-package com.zasadnyy.unitygradleplugin
+/*
+ *    Copyright (c) 2016 Vitaliy Zasadnyy
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ */
 
+package com.zasadnyy.gradle.unity
+
+import com.zasadnyy.gradle.unity.config.AndroidBuildConfig
+import com.zasadnyy.gradle.unity.config.BuildConfig
+import com.zasadnyy.gradle.unity.config.IosBuildConfig
+import com.zasadnyy.gradle.unity.config.IosScriptingBackend
+import com.zasadnyy.gradle.unity.config.IosSdkVersion
+import com.zasadnyy.gradle.unity.config.IosVersion
+import com.zasadnyy.gradle.unity.config.Platform
 import org.gradle.api.Project
 
 class UnityPluginExtension {
@@ -9,7 +33,7 @@ class UnityPluginExtension {
     AndroidBuildConfig android
     IosBuildConfig ios
 
-    private def buildConfigPlatformMapping
+    private Map buildConfigPlatformMapping
     private Project project
 
     
@@ -19,19 +43,19 @@ class UnityPluginExtension {
         this.buildConfigPlatformMapping = [Android:android, Ios:ios]
     }
 
-    def projectPath(projectPath) {
+    void projectPath(projectPath) {
         this.projectPath = projectPath
     }
     
-    def common(Closure closure) {
+    void common(Closure closure) {
         applyClosure(common, closure)
     }
 
-    def android(Closure closure) {
+    void android(Closure closure) {
         applyClosure(android, closure)
     }
 
-    def ios(Closure closure) {
+    void ios(Closure closure) {
         applyClosure(ios, closure)
     }
 
@@ -79,7 +103,7 @@ class UnityPluginExtension {
         }
     }
 
-    private def applyClosure(Object target, Closure closure) {
+    private void applyClosure(Object target, Closure closure) {
         closure.resolveStrategy = Closure.DELEGATE_FIRST
         closure.delegate = target
         closure()

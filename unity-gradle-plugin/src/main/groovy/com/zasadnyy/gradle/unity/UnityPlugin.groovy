@@ -1,5 +1,23 @@
-package com.zasadnyy.unitygradleplugin
+/*
+ *    Copyright (c) 2016 Vitaliy Zasadnyy
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ */
 
+package com.zasadnyy.gradle.unity
+
+import com.zasadnyy.gradle.unity.config.Platform
 import groovy.json.JsonOutput
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -66,7 +84,7 @@ class UnityPlugin implements Plugin<Project> {
         def unityPath = props.getProperty('unity.path')
         
         if(!unityPath) {
-            throw new UnityGradleException(
+            throw new UnityPluginException(
                     'unity.path property is miss configured. ' +
                     'Ensure local.properties file is created ' +
                     'and unity.path property is set to Unity executable location.'
@@ -76,3 +94,27 @@ class UnityPlugin implements Plugin<Project> {
         return unityPath
     }
 }
+
+/*
+ * ================= Testing tasks =================
+ */
+// task runUnityUnitTests(type:Exec, dependsOn: 'createOutputDir') {
+//     commandLine "${gradle.unityDir}/Unity",
+//             '-batchmode',
+//             '-projectPath', unityProjPath,
+//             '-executeMethod', 'UnityTest.Batch.RunUnitTests',
+//             '-logFile', "${outputDirPath}/unit-tests-run-log.txt",
+//             "-resultFilePath=${outputDirPath}/unit-tests-result.xml",
+//             '-quit'
+// }
+
+// task runUnityIntegrationTests(type:Exec, dependsOn: 'createOutputDir') {
+//     commandLine "${gradle.unityDir}/Unity",
+//             '-batchmode',
+//             '-projectPath', unityProjPath,
+//             '-executeMethod', 'UnityTest.Batch.RunIntegrationTests',
+//             '-testscenes=IntegrationTestsScene',
+//             "-targetPlatform=${getIntegrationTestTarget()}",
+//             '-logFile', "${outputDirPath}/integration-tests-run-log.txt",
+//             "-resultsFileDirectory=${outputDirPath}/integration-tests-results/"
+// }

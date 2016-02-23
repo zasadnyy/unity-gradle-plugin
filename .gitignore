@@ -40,3 +40,10 @@ example-unity-project/gradle/wrapper
 
 # Build outputs
 example-unity-project/dist
+*.log
+gradlew
+gradlew.bat
+unity-gradle-plugin/.gradle
+unity-gradle-plugin/.idea
+unity-gradle-plugin/build
+unity-gradle-plugin/gradle/wrapper

@@ -1,13 +1,11 @@
-import com.zasadnyy.unitygradleplugin.IosScriptingBackend
-import com.zasadnyy.unitygradleplugin.IosSdkVersion
-import com.zasadnyy.unitygradleplugin.IosVersion
-
-apply plugin: com.zasadnyy.unitygradleplugin.UnityPlugin
+plugins {
+    id "com.zasadnyy.unity" version "0.1.1"
+}
 
 unity {
     common {
         bundleId 'im.getsocial.testapp'
-        bundleVersion 'v.4.0.1'
+        bundleVersion 'v0.1'
         logFile 'build.log'
         isDevelopmentBuild true
         scenes 'Assets/Scenes/MainScene.unity', 'Assets/Scenes/MainScene1.unity'
@@ -37,46 +35,10 @@ unity {
 
     ios {
         logFile 'build-ios.log'
-        shortBundleVersion 'vXXX'
-        scriptingBackend IosScriptingBackend.Mono
-        sdkVersion IosSdkVersion.SimulatorSDK
-        targetIosVersion IosVersion.iOS_4_0
+        shortBundleVersion 'v0.1'
+        scriptingBackend 'Mono'
+        sdkVersion 'SimulatorSDK'
+        targetIosVersion 'iOS_4_0'
         outputName "ios-v${shortBundleVersion}"
     }
 }
-
-// ================================================================
-
-//// intermediate task for execution phase
-//task createOutputDir << {
-//    File destDir = new File("${outputDirPath}")
-//    if (!destDir.exists()) {
-//        destDir.mkdirs()
-//        println "Creating ${outputDirPath} folder..."
-//    }
-//}
-
-/*
- * ================= Testing tasks =================
- */
-// task runUnityUnitTests(type:Exec, dependsOn: 'createOutputDir') {
-//     commandLine "${gradle.unityDir}/Unity",
-//             '-batchmode',
-//             '-projectPath', unityProjPath,
-//             '-executeMethod', 'UnityTest.Batch.RunUnitTests',
-//             '-logFile', "${outputDirPath}/unit-tests-run-log.txt",
-//             "-resultFilePath=${outputDirPath}/unit-tests-result.xml",
-//             '-quit'
-// }
-
-// task runUnityIntegrationTests(type:Exec, dependsOn: 'createOutputDir') {
-//     commandLine "${gradle.unityDir}/Unity",
-//             '-batchmode',
-//             '-projectPath', unityProjPath,
-//             '-executeMethod', 'UnityTest.Batch.RunIntegrationTests',
-//             '-testscenes=IntegrationTestsScene',
-//             "-targetPlatform=${getIntegrationTestTarget()}",
-//             '-logFile', "${outputDirPath}/integration-tests-run-log.txt",
-//             "-resultsFileDirectory=${outputDirPath}/integration-tests-results/"
-// }
-
