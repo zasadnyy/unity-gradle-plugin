@@ -12,7 +12,9 @@ namespace Com.Zasadnyy
 
 			foreach (var arg in args)
 			{
-				var keyValue = arg.Split ('=');
+				// we care only about splitting the first '=' character,
+				// because of possible passwords including '=' characters
+				var keyValue = arg.Split (new char[] {'='}, 2);
 
 				if (keyValue.Length == 2)
 				{
