@@ -63,7 +63,7 @@ class UnityPlugin implements Plugin<Project> {
 
             def serializedBuildConfig = JsonOutput.toJson(configMap)
 
-            commandLine "${getUnityPath(project)}/Unity",
+            commandLine "${getUnityPath(project)}",
                     '-batchmode',
                     '-projectPath', "${project.rootDir.absolutePath}/${plugin.projectPath}",
                     '-logFile', buildConfig.logFile,
