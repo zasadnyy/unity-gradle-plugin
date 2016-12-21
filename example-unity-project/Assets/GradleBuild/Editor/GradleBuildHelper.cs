@@ -43,7 +43,7 @@ namespace Com.Zasadnyy
 			case BuildTarget.Android:
 				ApplyAdroidConfig(config);
 				break;
-			case BuildTarget.iPhone:
+			case BuildTarget.iOS:
 				ApplyIosConfig(config);
 				break;
 			}
@@ -70,7 +70,7 @@ namespace Com.Zasadnyy
 			PlayerSettings.Android.useAPKExpansionFiles = config.Android.SplitApplicationBinary;
 
 			// TODO make configurable
-			EditorUserBuildSettings.androidBuildSubtarget = AndroidBuildSubtarget.ETC;
+			EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ETC;
 		}
 
 		private static void ApplyIosConfig(BuildConfig config)
@@ -83,7 +83,7 @@ namespace Com.Zasadnyy
 
 		private static void PerformBuild(BuildConfig config)
 		{
-			if((config.TargetPlatform != BuildTarget.Android) && (config.TargetPlatform != BuildTarget.iPhone))
+			if((config.TargetPlatform != BuildTarget.Android) && (config.TargetPlatform != BuildTarget.iOS))
 			{
 				Debug.LogError("GradleBuildHelper error. Unsupported platform: " + config.TargetPlatform);
 				return;

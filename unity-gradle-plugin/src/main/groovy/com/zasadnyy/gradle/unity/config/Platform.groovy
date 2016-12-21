@@ -22,7 +22,7 @@ package com.zasadnyy.gradle.unity.config
  * by Unity Gradle plugin
  */
 enum Platform {
-    Android('Android'), Ios('iPhone')
+    Android('Android'), Ios('iOS')
 
     /**
      * For some platforms Unity has weird
